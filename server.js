@@ -1,6 +1,7 @@
 var express = require('express')
 var request = require('request')
 var commons = require('wmcommons')
+var config = require('./config.json')
 var app = express()
 
 request = request.defaults({headers: {'User-Agent':'github.com/zuzak/wikidata-viewer'}})
@@ -36,11 +37,12 @@ app.get('/img/:entity', function(req, res){
   res.redirect(301,commons(img))
 })
 
-// https://www.wikidata.org/wiki/Q4115189
-//
-/// http://www.wikidata.org/w/api.php?action=wbsetlabel&id=Q4115189&language=en&description=test&format=jsonfm
 app.get('/write/:id/:description', function(req, res){
-  if(req.params.id !== 'Q4115189'){
+  if(!config.write){
+    res.json(403,{error: 'no editing allowed!'})
+    return
+  }
+  if(req.params.id !== 'Q4115189' && config.restrict){
     res.json(403,{error:'not sandbox!'})
     return
   }
@@ -65,4 +67,7 @@ app.get('/write/:id/:description', function(req, res){
   })
 })
 
+app.get('/config', function(req, res){
+  res.json(config)
+})
 app.listen(3000)
