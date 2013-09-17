@@ -1,5 +1,5 @@
 {
-  name: "wikidata-viewer",
+  "name": "wikidata-viewer",
   "dependencies": {
     "request": "~2.27.0",
     "express": "~3.4.0",
