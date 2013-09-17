@@ -10,27 +10,26 @@
             font-family:sans-serif;
             text-align:center;
         }
-        input {
+        .article {
             border: 2px solid #aaa;
             font-size:2em;
-            width:100%;
+            width:400px;
         }
         .info {
             margin:2em;
         }
         .image {
             max-width:400px;
-            max-height:400px;
             margin:auto;
             display:block;
         }
     </style>
     <script>
       $(document).ready(function(){
-        $('input').keypress(function(e){
+        $('.article').keypress(function(e){
           if(e.keyCode == 13){
             $('.info').fadeOut()
-            var searchTerm = $('input').val()
+            var searchTerm = $('.article').val()
             searchTerm = encodeURI(searchTerm)
             $.getJSON('data/' + searchTerm, function(data){
               if(data.descriptions){
@@ -40,10 +39,6 @@
               }
               renderImg("P18",".image",data)
               renderImg("P51",".sound",data)
-              /*
-              $('audio').each(function(){
-                  $(this).get(0).stop()
-              })*/
               if(getData(data,"P51")){
                   var sound = '<audio src="img/' + getData(data,"P51")
                   sound += '" autoplay>'
@@ -79,11 +74,11 @@
 </head>
 <body>
     <h1>Wikidata viewer</h1>
-    <input placeholder="Las Vegas" type="text" />
+    <input class="article" placeholder="Las Vegas" type="text" />
     <div class="info">
-        <img src="http://i.imgur.com/pRyNqK9.png" class="image" />
         <span class="desc"></span>
-        <audio src="" autoplay>
+        <input type="text" class="edit" placeholder="No description! Type here to add one!" />
+        <img src="http://i.imgur.com/pRyNqK9.png" class="image" />
     </div>
 </body>
 
