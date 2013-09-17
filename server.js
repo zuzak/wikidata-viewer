@@ -17,16 +17,22 @@ app.get('/data/:entity', function(req, res){
     if(data.success){
       data = data.entities
       var matches = Object.keys(data)
+      if(matches[0] == "-1"){
+        res.json(404,data)
+        console.log("NONE " + req.params.entity)
+        return
+      } 
       data = data[matches[0]]
       res.json(data)
+      console.log("GOOD " + req.params.entity)
     } else {
       res.json('500',data)
+      console.log("FAIL "+ req.params.entity)
     }
   })
 })
 app.get('/img/:entity', function(req, res){
   var img = decodeURI(req.params.entity)
-  console.log(img+".")
   res.redirect(301,commons(img))
 })
 
