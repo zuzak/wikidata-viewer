@@ -1,4 +1,4 @@
 {
-  "restrict": true,
-  "write": false
+  "restrict": false,
+  "write": true 
 }
