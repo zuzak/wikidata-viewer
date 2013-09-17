@@ -19,8 +19,10 @@
             margin:2em;
         }
         .image {
-            width:100%;
-            height:100%;
+            max-width:400px;
+            max-height:400px;
+            margin:auto;
+            display:block;
         }
     </style>
     <script>
@@ -36,10 +38,16 @@
               } else {
                 $('.desc').text('')
               }
-              if(data.claims.P18){
-                $('.image').attr('src','img/' + data.claims.P18[0].mainsnak.datavalue.value)
-              } else {
-                $('.image').attr('src','')
+              renderImg("P18",".image",data)
+              renderImg("P51",".sound",data)
+              /*
+              $('audio').each(function(){
+                  $(this).get(0).stop()
+              })*/
+              if(getData(data,"P51")){
+                  var sound = '<audio src="img/' + getData(data,"P51")
+                  sound += '" autoplay>'
+                  $('body').append(sound)
               }
               $('.info').fadeIn()
             }).fail(function(){
@@ -48,14 +56,34 @@
           }
         })
       })
+      function getData(data,property){
+          return data.claims[property][0].mainsnak.datavalue.value
+      }
+      function renderImg(property, element, data){
+          if(data.claims[property]){
+              var value = getData(data,property)
+              $(element).attr('src','img/' + value)
+          } else {
+              $(element).attr('src','http://i.imgur.com/pRyNqK9.png')
+          }
+      }
+      function renderTxt(property, element, data){
+          if(data.claims[property]){
+              var value = getData(data,property)
+              $(element).text(value)
+          } else {
+              $(element).text("")
+          }
+      }
     </script>
 </head>
 <body>
     <h1>Wikidata viewer</h1>
     <input placeholder="Las Vegas" type="text" />
     <div class="info">
-        <img src="" class="image" />
+        <img src="http://i.imgur.com/pRyNqK9.png" class="image" />
         <span class="desc"></span>
+        <audio src="" autoplay>
     </div>
 </body>
 
