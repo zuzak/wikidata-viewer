@@ -1,0 +1,9 @@
+{
+  name: "wikidata-viewer",
+  "dependencies": {
+    "request": "~2.27.0",
+    "express": "~3.4.0",
+    "connect": "~2.9.0",
+    "wmcommons": "0.0.1"
+  }
+}
